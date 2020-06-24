@@ -1,1 +1,59 @@
-<p>user-info works!</p>
+<div class="container">
+    <div class="row ">
+      <div class="col-md-12">
+        <app-search-form (getName)='findUser($event)'></app-search-form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-7">
+        <div class="table table-striped table-bordered">
+          <h3>{{users.name}}</h3>
+          <table class="table table-striped table-light">
+            <tbody>
+              <tr>
+                <th scope="row">Github Username:</th>
+                <td>
+                  <a href="{{users.html_url}}" target="_blank">{{users.login}}</a> 
+                </td>
+              </tr>
+              
+        
+              <tr>             
+                 <th scope="row">Followers:</th>
+                <td>{{users.followers}}</td>
+              </tr>
+              <tr>
+                <th scope="row">Following</th>
+                <td>{{users.following}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-5 image-start">
+        <img src="{{users.avatar_url}}">
+      </div>
+    </div>
+    <hr>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div  class="col-md-12">
+    
+        <div class="table table-striped">
+          <table class="table">
+            <tbody>
+              <tr *ngFor='let repository of userRepos.newRepository'>
+                <td>                <a href="{{repository.html_url}}" target="_blank" >{{repository.name}}</a><br>
+                    <p class="desc">Description: {{repository.description}}</p><br>
+                  
+                    <img src="https://c8.alamy.com/comp/XBH2YG/young-kenyan-woman-works-on-her-laptop-and-listens-to-music-nairobi-kenya-XBH2YG.jpg" height="260">
+                </td>
+              </tr>
+              </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  

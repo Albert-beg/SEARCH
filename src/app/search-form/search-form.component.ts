@@ -1,34 +1,54 @@
-import { Component, OnInit } from '@angular/core';
-import {GithubService } from '../github.service';
-import{FormsModule} from '@angular/forms';
+import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {Search} from '../search';
+import {SearchRequestService} from '../search-request.service';
+import {Repository} from '../repository';
+import {User} from '../user';
+
 @Component({
   selector: 'app-search-form',
   templateUrl: './search-form.component.html',
-  styleUrls: ['./search-form.component.css'],
-  providers:[GithubService]
+  
+  styleUrls: ['./search-form.component.css']
 })
 export class SearchFormComponent implements OnInit {
-  user:any;
-  repos:any;
-  username:string;
+    searchInfo = new Search('');
+    @Output() getName = new EventEmitter<Search>();
 
-  constructor(private _githubService:GithubService) {
-    
-   }
+    searchFor(data){
+        this.getName.emit(data.value.find);
+        console.log(data.value.find)
+        data.reset();
+    }
 
-   search(){
-     this._githubService.updateUser(this.username)
+    public searchMe = '';
+    public githubUser: string;
+  
+    users: User ;
+    repository: Repository;
+    public searchRepo: string;
 
-     this._githubService.getUser().subscribe(user => {
-       this.user = user;
-     });
-
-     this._githubService.getRepos().subscribe(repos => {
-       this.repos = repos;
-     });
-   }
-
-  ngOnInit(): void {
+  
+  
+    findUser(username) {
+        this.githubUser = '';
+        this.searchMe  = username;
+        this.ngOnInit();
+    }
+  
+  
+  constructor(public githubUserRequest: SearchRequestService, public userRepos: SearchRequestService) { }
+  
+  ngOnInit() {
+      this.githubUserRequest.githubUser(this.searchMe);
+      this.users = this.githubUserRequest.users;
+      this.userRepos.gitUserRepos(this.searchMe);
+      console.log(this.userRepos);
   }
-
-}
+  
+  
+    searchRepos() {
+        this.searchRepo = '';
+      
+  
+    }
+  }
